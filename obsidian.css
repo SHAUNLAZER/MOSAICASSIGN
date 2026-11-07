@@ -413,7 +413,7 @@ select { background: var(--ob-glass-hi) !important; }
 .placard-bullet-text { color: var(--ob-head) !important; }
 .chat-category-tabs { background: var(--ob-glass-hi) !important; }
 .chat-tab-btn { color: var(--ob-pink) !important; }
-.chat-tab-btn.active { background: var(--ob-glass-hi) !important; color: var(--ob-pink) !important; box-shadow: 0 1px 4px var(--ob-shadow) !important; }
+.chat-tab-btn.active { background: rgba(232,121,249,0.15) !important; color: var(--ob-pink) !important; border: 1px solid rgba(232,121,249,0.4) !important; box-shadow: 0 1px 4px var(--ob-shadow) !important; }
 .chat-batch-title { color: var(--ob-head) !important; }
 .chat-batch-badge { color: var(--ob-pink) !important; background: var(--ob-glass-hi) !important; }
 .answer-reassurance { background: var(--ob-glass-hi) !important; }

@@ -5505,7 +5505,7 @@ textarea {
   padding:8px 6px;
   font-size:0.8rem;
   font-weight:600;
-  border:none;
+  border:1px solid transparent;
   background:none;
   color:var(--ob-body);
   border-radius:8px;
@@ -5515,9 +5515,10 @@ textarea {
 }
 
 .chat-tab-btn.active {
-  background:rgba(255,255,255,0.04);
-  color:var(--ob-pink);
-  box-shadow:0 1px 4px rgba(0, 0, 0, 0.08);
+  background:rgba(46,157,255,0.15);
+  color:#2E9DFF;
+  border:1px solid rgba(46,157,255,0.4);
+  box-shadow:0 1px 4px rgba(46,157,255,0.15);
   font-weight:700;
 }
 

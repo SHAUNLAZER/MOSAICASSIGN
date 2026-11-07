@@ -3424,11 +3424,6 @@ function openMarkerDrawer(markerId) {
     html += '<button type="button" class="chip' + (on ? ' selected' : '') + '" role="radio" aria-checked="' + on + '" data-score="' + opt.score + '">' + escHTML(opt.label) + '</button>';
   });
   html += '</div>' +
-    '<div class="field mt-16"><label id="marker-unusual-label">Anything unusual or worrying?</label>' +
-      '<div class="chip-group" id="marker-unusual" role="radiogroup" aria-labelledby="marker-unusual-label">' +
-        '<button type="button" class="chip' + (existing && existing.unusual === true ? ' selected' : '') + '" role="radio" data-value="yes">Yes</button>' +
-        '<button type="button" class="chip' + (!existing || existing.unusual !== true ? ' selected' : '') + '" role="radio" data-value="no">No</button>' +
-      '</div></div>' +
     '<button type="submit" class="btn btn-primary btn-full mt-16" id="save-marker"' + (prevScore === undefined ? ' disabled' : '') + '>Save review</button>' +
   '</form>';
 
@@ -3442,13 +3437,6 @@ function openMarkerDrawer(markerId) {
         c.classList.add('selected'); c.setAttribute('aria-checked', 'true');
         score = Number(c.getAttribute('data-score'));
         if (saveBtn) saveBtn.disabled = false;
-      });
-    });
-    panelEl.querySelectorAll('#marker-unusual .chip').forEach(function (c) {
-      c.addEventListener('click', function () {
-        panelEl.querySelectorAll('#marker-unusual .chip').forEach(function (x) { x.classList.remove('selected'); });
-        c.classList.add('selected');
-        unusual = c.getAttribute('data-value') === 'yes';
       });
     });
     var form = panelEl.querySelector('#marker-form');

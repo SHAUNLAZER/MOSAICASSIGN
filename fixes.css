@@ -1,0 +1,409 @@
+/* fixes.css — loaded last. Pink-only theme fixes:
+   - bright logo in both themes
+   - light text on every dark/deep-pink surface
+   - light mode: light pink page, deep fluorescent pink cards with light text
+   - clearly visible selected states
+   - calendar partial fill, breathing pacer, results additions */
+
+/* ---------- shared tokens ---------- */
+:root {
+  --logo-bg: linear-gradient(135deg, #6DBBFF 0%, #2E9DFF 55%, #0077E0 100%);
+  --logo-ink: #FFFFFF;
+  --logo-glow: 0 0 0 2px rgba(110, 187, 255, 0.35), 0 6px 18px -4px rgba(46, 157, 255, 0.7);
+
+  /* buttons + selected chips (dark theme) */
+  --btn-bg: linear-gradient(120deg, #2F94EC 0%, #0E6FC4 100%);
+  --btn-ink: #FFFFFF;
+  --sel-bg: linear-gradient(120deg, #2F94EC 0%, #0E6FC4 100%);
+  --sel-ink: #FFFFFF;
+  --sel-border: #C2E3FF;
+  --sel-glow: 0 0 0 3px rgba(110, 187, 255, 0.28), 0 8px 22px -8px rgba(46, 157, 255, 0.8);
+}
+
+/* ---------- LIGHT THEME: page level ---------- */
+:root[data-theme="light"] {
+  --ob-bg-0: #E4F2FF;
+  --ob-bg-1: #D6ECFF;
+  --ob-glass: #F0F8FF;
+  --ob-glass-hi: #D9EDFF;
+  --ob-hair: #A3CFF5;
+  --ob-head: #0A3F6E;
+  --ob-body: #1A5486;
+  --ob-label: #2E6A9E;
+  --ob-pink: #1270C2;
+  --ob-hot: #1280E0;
+  --ob-soft: #1561A3;
+  --ob-ink: #FFFFFF;
+  --ob-tint: #D0E9FF;
+  --ob-shadow: rgba(16, 101, 176, 0.18);
+  --ob-overlay: rgba(10, 63, 110, 0.38);
+  --ob-prism: linear-gradient(120deg, #157CD6, #1065B0);
+  --btn-bg: linear-gradient(120deg, #157CD6 0%, #1065B0 100%);
+  --btn-ink: #FFFFFF;
+  --sel-bg: linear-gradient(120deg, #157CD6 0%, #1065B0 100%);
+  --sel-ink: #FFFFFF;
+  --sel-border: #1065B0;
+  --sel-glow: 0 0 0 3px rgba(21, 124, 214, 0.25), 0 8px 20px -10px rgba(16, 101, 176, 0.7);
+}
+
+/* ---------- LIGHT THEME: the deep fluorescent pink "center" surfaces ---------- */
+:root[data-theme="light"] :is(
+  .card, .stat-card, .setup-card, .routine-card, .forecast-card, .memory-card, .quote-card, .mindset-card,
+  .results-bento-card, .burn-rate-card, .ritual-checklist-card, .hero-visual-card,
+  .discovery-card, .product-card, .how-panel, .timeline-placard, .timeline-informatics-card, .weather-selector-card,
+  .micro-marker-card, .install-hint-card, .guide-speech-card, .progress-summary, .confirm-panel, .recap-card,
+  .bm-figure-card, .bm-clean-card, .verdict-banner, .banner, .tip-bar, .drawer-panel,
+  .chart-container, .heatmap-wrap, .bee-character-card, .breathing-card, .recap-content, .bm-stage
+) {
+  --ob-glass: #0A5CA8;
+  --ob-glass-hi: #00468A;
+  --ob-hair: #7DBBF2;
+  --ob-head: #FFFFFF;
+  --ob-body: #EAF5FF;
+  --ob-label: #D0E9FF;
+  --ob-pink: #C2E3FF;
+  --ob-hot: #FFFFFF;
+  --ob-soft: #D9EDFF;
+  --ob-ink: #1065B0;
+  --ob-tint: #3893E3;
+  --ob-shadow: rgba(6, 67, 120, 0.28);
+  --ob-prism: linear-gradient(120deg, #FFFFFF, #D6ECFF);
+  --btn-bg: #FFFFFF;
+  --btn-ink: #1065B0;
+  --sel-bg: #FFFFFF;
+  --sel-ink: #0E5FA5;
+  --sel-border: #FFFFFF;
+  --sel-glow: 0 0 0 3px rgba(255, 255, 255, 0.35), 0 8px 20px -8px rgba(0, 43, 80, 0.55);
+  /* legacy aliases resolve inside this scope too */
+  --primary-blue: var(--ob-pink);
+  --deep-navy: var(--ob-head);
+  --pale-blue: var(--ob-tint);
+  --warm-cream: var(--ob-tint);
+  --text-main: var(--ob-head);
+  --text-secondary: var(--ob-body);
+  --surface-white: var(--ob-glass);
+  --surface-subtle: var(--ob-glass-hi);
+  --accent-orange: var(--ob-soft);
+  --border-light: var(--ob-hair);
+  --tag-yellow-bg: var(--ob-glass-hi); --tag-yellow-text: var(--ob-head);
+  --tag-lavender-bg: var(--ob-glass-hi); --tag-lavender-text: var(--ob-head);
+  --verdict-early-bg: var(--ob-glass-hi); --verdict-early-border: var(--ob-hair); --verdict-early-text: var(--ob-head);
+  --verdict-ontrack-bg: var(--ob-glass-hi); --verdict-ontrack-border: var(--ob-hair); --verdict-ontrack-text: var(--ob-head);
+  --verdict-consistency-bg: var(--ob-glass-hi); --verdict-consistency-border: var(--ob-hair); --verdict-consistency-text: var(--ob-head);
+  --verdict-closer-bg: var(--ob-glass-hi); --verdict-closer-border: var(--ob-hair); --verdict-closer-text: var(--ob-head);
+  --danger-bg: #0B518E; --danger-border: #FFFFFF; --danger-text: #FFFFFF;
+  color: var(--ob-body);
+}
+/* Nested surfaces inside a deep-pink card sit one shade darker so they still read as separate. */
+:root[data-theme="light"] :is(.card, .results-bento-card, .bee-character-card, .drawer-panel, .weather-selector-card, .breathing-card, .ritual-checklist-card)
+  :is(.bee-speech-bubble, .shelf-product-item, .chat-msg, .metric, .card, .stat-card, .results-matrix-row) {
+  background: var(--ob-glass-hi) !important;
+}
+:root[data-theme="light"] .bee-speech-bubble::before { background: var(--ob-glass-hi) !important; }
+:root[data-theme="light"] :is(.intro-stage, body) { background: var(--ob-bg-0) !important; }
+:root[data-theme="light"] #app-header,
+:root[data-theme="light"] #tab-bar { background: #D9EDFF !important; }
+
+/* ---------- buttons: always light text on deep pink, or deep pink on white ---------- */
+.btn-primary, .checkin-btn, .btn-mark-all-done, .bee-continue-btn, #header-cta-btn {
+  background: var(--btn-bg) !important;
+  color: var(--btn-ink) !important;
+  border-color: transparent !important;
+}
+.btn-primary:hover, .btn-primary:focus-visible { background: var(--btn-bg) !important; filter: brightness(1.06); }
+.btn-primary svg, .btn-mark-all-done svg { color: var(--btn-ink) !important; stroke: currentColor; }
+.btn-primary[disabled], .day-submit-row .btn[disabled] { opacity: 0.55 !important; }
+:root[data-theme="light"] :is(.card, .results-bento-card, .bee-character-card, .drawer-panel, .ritual-checklist-card, .breathing-card, .weather-selector-card) .btn-secondary {
+  background: transparent !important; color: #FFFFFF !important; border: 1.5px solid rgba(255, 255, 255, 0.75) !important;
+}
+:root[data-theme="light"] .header-shop-btn { color: var(--ob-head) !important; }
+
+/* ---------- 1. Bright logo, both themes ---------- */
+.guide-avatar-badge, .guide-avatar-circle, .bee-avatar-hero, .guide-floating-icon {
+  background: var(--logo-bg) !important;
+  color: var(--logo-ink) !important;
+  border-color: rgba(255, 255, 255, 0.7) !important;
+  box-shadow: var(--logo-glow) !important;
+  opacity: 1;
+}
+.guide-avatar-badge { width: 38px !important; height: 38px !important; }
+.guide-avatar-badge svg, .guide-avatar-circle svg, .bee-avatar-hero svg, .guide-floating-icon svg {
+  color: var(--logo-ink) !important; fill: var(--logo-ink) !important;
+}
+.guide-floating-icon { display: inline-grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; }
+.brand-name { color: var(--ob-head) !important; }
+.intro-letters, .intro-glyph, .intro-plus, .intro-canvas, .intro-final-figure { color: #2E9DFF !important; }
+:root:not([data-theme="light"]) .intro-letters,
+:root:not([data-theme="light"]) .intro-glyph,
+:root:not([data-theme="light"]) .intro-plus,
+:root:not([data-theme="light"]) .intro-final-figure { color: #5FB4FF !important; filter: drop-shadow(0 0 10px rgba(95, 180, 255, 0.55)); }
+:root[data-theme="light"] .intro-final-figure, :root[data-theme="light"] .intro-glyph, :root[data-theme="light"] .intro-plus { color: #00539B !important; }
+
+/* ---------- 2. Skip buttons removed ---------- */
+.intro-skip-btn, .bm-skip { display: none !important; }
+
+/* ---------- 3. Selected states that actually light up ---------- */
+.chip.selected, .mood-chip-btn.selected, .micro-option-btn.selected, .segmented-option.selected, .rating-btn.selected,
+.face-option.selected, .pill-tab.active, .bee-choice-btn.selected, .shelf-product-item.selected, .choice-tab.is-active,
+.chip.focus-ring-active, .mood-chip-btn.focus-ring-active {
+  background: var(--sel-bg) !important;
+  color: var(--sel-ink) !important;
+  border-color: var(--sel-border) !important;
+  box-shadow: var(--sel-glow) !important;
+}
+:is(.mood-chip-btn, .bee-choice-btn, .shelf-product-item, .choice-tab).selected *,
+.choice-tab.is-active *, .mood-chip-btn.selected span { color: var(--sel-ink) !important; }
+.bee-choice-btn { position: relative; transition: background 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease; }
+.bee-choice-btn.selected { transform: translateY(-1px); }
+.bee-choice-btn.selected .bee-choice-title { color: var(--sel-ink) !important; }
+.bee-choice-btn.selected::after {
+  content: "\2713"; position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+  width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center;
+  font-size: 0.8rem; font-weight: 800; background: var(--sel-ink); color: #1280E0;
+}
+:root[data-theme="light"] .bee-choice-btn.selected::after { color: #FFFFFF; }
+
+/* Onboarding product list ("Do you already have ... formulas at home?") */
+.bee-shelf-item {
+  cursor: pointer; padding: 10px 14px; border-radius: 12px !important; display: flex; align-items: center; gap: 10px;
+  background: var(--ob-glass-hi) !important; border: 1.5px solid var(--ob-hair) !important;
+}
+.bee-shelf-name { font-size: 0.92rem; font-weight: 600; color: #E3F2FF !important; }
+:root[data-theme="light"] .bee-shelf-name { color: #FFFFFF !important; }
+.bee-shelf-item .shelf-checkbox {
+  width: 20px; height: 20px; border-radius: 6px; flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+  border: 1.5px solid #C2E3FF !important; background: transparent !important; color: #1280E0 !important;
+}
+.bee-shelf-item.selected .shelf-checkbox { background: #FFFFFF !important; border-color: #FFFFFF !important; color: #1280E0 !important; }
+.bee-shelf-item.selected .bee-shelf-name { color: var(--sel-ink) !important; }
+
+/* Generic: any inline step label in the onboarding uses light text on dark cards */
+.bee-character-card [style*="font-weight:700"] { color: var(--ob-head) !important; }
+
+/* ---------- 4. Calendar: partial days fill to their percent ---------- */
+.dot.partial {
+  background: linear-gradient(to top, var(--ob-pink) var(--pct, 0%), var(--ob-glass-hi) var(--pct, 0%)) !important;
+  border-color: var(--ob-pink) !important;
+  color: var(--ob-head) !important;
+  text-shadow: 0 1px 2px rgba(0, 32, 60, 0.55);
+}
+.dot.partial.pending { border-style: dashed !important; }
+.dot.done {
+  background: var(--sel-bg) !important; color: var(--sel-ink) !important; border-color: var(--sel-border) !important;
+}
+
+/* ---------- 5. Breathing pacer ---------- */
+/* Animate the `scale` property so hover's !important `transform` can't freeze it. */
+@keyframes bwBreatheIn { from { scale: 0.85; } to { scale: 1.3; } }
+@keyframes bwBreatheHold { 0%, 100% { scale: 1.3; } 50% { scale: 1.34; } }
+@keyframes bwBreatheOut { from { scale: 1.3; } to { scale: 0.85; } }
+.breathing-circle-core { scale: 1; }
+.breathing-circle-core.is-running { transform: none !important; }
+.breathing-circle-core.is-running.inhaling { animation: bwBreatheIn 4s ease-in-out forwards !important; animation-duration: 4s !important; animation-iteration-count: 1 !important; }
+.breathing-circle-core.is-running.holding { animation: bwBreatheHold 4s ease-in-out forwards !important; animation-duration: 4s !important; animation-iteration-count: 1 !important; }
+.breathing-circle-core.is-running.exhaling { animation: bwBreatheOut 4s ease-in-out forwards !important; animation-duration: 4s !important; animation-iteration-count: 1 !important; }
+.breathing-circle-core {
+  background: var(--btn-bg) !important; color: var(--btn-ink) !important;
+  box-shadow: 0 0 0 6px color-mix(in srgb, var(--ob-pink) 18%, transparent), 0 0 28px color-mix(in srgb, var(--ob-pink) 45%, transparent) !important;
+}
+.breathing-circle-core span { color: var(--btn-ink) !important; }
+.breathing-circle-track { border-color: color-mix(in srgb, var(--ob-pink) 45%, transparent) !important; }
+.breathing-hint { font-size: 0.86rem; margin-top: 14px; font-weight: 600; text-align: center; color: var(--ob-soft) !important; }
+:root:not([data-theme="light"]) .breathing-hint { color: #B8DEFF !important; }
+
+/* ---------- 6. Results ---------- */
+.results-big-num { font-size: 2rem; font-weight: 800; line-height: 1; color: var(--ob-head) !important; }
+:root:not([data-theme="light"]) .results-consistency-card .results-big-num { color: #B8DEFF !important; }
+.results-big-sub { font-size: 0.86rem; margin-top: 4px; color: var(--ob-label) !important; }
+.results-streak-row {
+  margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--ob-hair);
+  display: flex; justify-content: space-between; font-size: 0.86rem; color: var(--ob-label);
+}
+.results-streak-row strong { color: var(--ob-pink) !important; }
+:root:not([data-theme="light"]) .results-streak-row strong { color: #B8DEFF !important; }
+.results-score-dial-bg { stroke: var(--ob-glass-hi) !important; }
+.results-score-dial-val { stroke: var(--ob-pink) !important; }
+.results-consistency-card .badge, .results-bento-card .badge-blue, .badge-blue {
+  background: var(--ob-glass-hi) !important; color: var(--ob-pink) !important; border: 1px solid var(--ob-hair) !important;
+}
+:root:not([data-theme="light"]) .badge-blue { color: #B8DEFF !important; }
+.results-delta-pill.neutral, .results-delta-pill.positive { color: var(--ob-head) !important; }
+.results-muted, .results-reasons { color: var(--ob-label) !important; }
+.results-reasons { margin: 0; padding-left: 18px; font-size: 0.85rem; }
+.results-reasons li { color: var(--ob-body); }
+
+.results-verdict-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.where-you-are-btn {
+  display: inline-flex; align-items: center; gap: 6px; cursor: pointer;
+  font: inherit; font-size: 0.82rem; font-weight: 700; padding: 7px 12px; border-radius: 999px;
+  background: var(--ob-glass-hi); color: var(--ob-pink); border: 1px solid var(--ob-hair);
+  transition: background 0.18s ease, color 0.18s ease;
+}
+:root:not([data-theme="light"]) .where-you-are-btn { color: #B8DEFF; }
+.where-you-are-btn:hover, .where-you-are-btn.is-open { background: var(--sel-bg); color: var(--sel-ink); border-color: var(--sel-border); }
+.where-you-are-panel {
+  margin: 4px 0 14px; padding: 14px; border-radius: 14px;
+  background: var(--ob-glass-hi); border: 1px solid var(--ob-hair);
+}
+.where-you-are-panel[hidden] { display: none; }
+.wya-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin-bottom: 10px; }
+.wya-stat { display: flex; flex-direction: column; align-items: flex-start; }
+.wya-num { font-size: 1.35rem; font-weight: 800; color: var(--ob-head); line-height: 1.1; }
+.wya-lbl { font-size: 0.74rem; color: var(--ob-label); }
+.wya-line { font-size: 0.84rem; margin: 6px 0 0; color: var(--ob-body); line-height: 1.45; }
+.wya-line strong { color: var(--ob-head); }
+@media (max-width: 560px) { .wya-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* Timeline bar with labels at their true week positions */
+.results-horizon { margin: 6px 0 14px; padding: 0 6px; }
+.results-horizon .results-horizon-track {
+  position: relative; height: 10px; border-radius: 999px; overflow: visible !important; margin-bottom: 6px;
+  background: var(--ob-glass-hi) !important;
+}
+.results-horizon .results-horizon-fill { height: 100%; border-radius: 999px; background: var(--sel-bg) !important; }
+:root[data-theme="light"] .results-bento-card .results-horizon-fill { background: #FFFFFF !important; }
+.results-horizon-tick {
+  position: absolute; top: 50%; width: 4px; height: 16px; margin-left: -2px; transform: translateY(-50%);
+  border-radius: 2px; background: var(--ob-hair);
+}
+.results-horizon-you {
+  position: absolute; top: 50%; width: 16px; height: 16px; margin-left: -8px; transform: translateY(-50%);
+  border-radius: 50%; background: var(--ob-head); border: 3px solid var(--ob-pink); box-shadow: 0 0 0 4px color-mix(in srgb, var(--ob-pink) 30%, transparent);
+}
+.results-horizon-labels { position: relative; height: 18px; font-size: 0.76rem; color: var(--ob-label); }
+.results-horizon-labels span { position: absolute; top: 0; white-space: nowrap; transform: translateX(-50%); }
+.results-horizon-labels span:first-child { transform: none; }
+.results-horizon-labels span:last-child { transform: translateX(-100%); }
+
+/* Marker buttons */
+.marker-btn-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
+.marker-btn {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; text-align: left;
+  font: inherit; cursor: pointer; padding: 14px 16px; border-radius: 14px;
+  background: var(--ob-glass-hi); border: 1.5px solid var(--ob-hair); color: var(--ob-body);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+.marker-btn:hover, .marker-btn:focus-visible { border-color: var(--ob-pink); transform: translateY(-1px); box-shadow: var(--sel-glow); }
+.marker-btn-main { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.marker-btn-name { font-weight: 700; font-size: 0.95rem; color: var(--ob-head); }
+.marker-btn-hint { font-size: 0.8rem; color: var(--ob-label); }
+.marker-btn-status {
+  flex-shrink: 0; display: inline-flex; align-items: center; gap: 4px; font-size: 0.8rem; font-weight: 700;
+  padding: 6px 10px; border-radius: 999px; background: var(--btn-bg); color: var(--btn-ink);
+}
+.marker-btn.is-recorded .marker-btn-status { background: var(--ob-glass); color: var(--ob-head); border: 1px solid var(--ob-hair); }
+.marker-btn-status svg { width: 12px; height: 12px; }
+
+/* ---------- 7. Day progress + misc readable text ---------- */
+.day-progress-head strong { color: var(--ob-head) !important; }
+.day-progress-track { background: var(--ob-glass-hi) !important; }
+.day-progress-fill { background: var(--sel-bg) !important; }
+:root[data-theme="light"] .ritual-checklist-card .day-progress-fill { background: #FFFFFF !important; }
+.day-submitted-note { color: var(--ob-pink) !important; }
+.ritual-step-item { color: var(--ob-head); }
+.ritual-step-item.checked { border-color: var(--ob-pink) !important; }
+.ritual-checkbox { border-color: var(--ob-pink) !important; color: var(--ob-ink); }
+.ritual-step-item.checked .ritual-checkbox { background: var(--ob-pink) !important; color: var(--ob-ink) !important; }
+.card-text, .card p { color: var(--ob-body); }
+.muted { color: var(--ob-label) !important; }
+.danger-card { background: var(--ob-glass) !important; }
+
+/* Light-mode body map figure stays visible on the deep pink card */
+:root[data-theme="light"] .bm-figure-card { background: #137AD4 !important; }
+:root[data-theme="light"] .bm-figure-card .bm-figure { fill: #55A8F0 !important; }
+:root[data-theme="light"] .bm-figure-card .bm-tag { stroke: #137AD4; fill: #E3F2FF; }
+:root[data-theme="light"] .bm-figure-card .bm-tag.is-active { fill: #FFFFFF; }
+:root[data-theme="light"] .bm-figure-card .bm-pin-dot { fill: #FFFFFF !important; }
+:root[data-theme="light"] .bm-figure-card .bm-pin-ring { stroke: #FFFFFF !important; }
+:root[data-theme="light"] .bm-figure-card .bm-pin-track { stroke: #0F66B3 !important; }
+.bm-legend-meta { color: var(--ob-pink) !important; font-weight: 700; }
+.bm-legend-item:not(.is-active) .bm-legend-meta { color: var(--ob-label) !important; font-weight: 500; }
+
+/* ---------- round 2 polish ---------- */
+.badge-blue, .results-consistency-card .badge {
+  display: inline-flex !important; align-items: center; width: auto !important; max-width: max-content;
+  padding: 4px 12px !important; border-radius: 999px !important; border: 0 !important;
+  font-size: 0.78rem !important; font-weight: 700 !important; letter-spacing: 0.02em;
+}
+.results-score-dial-bg { stroke: var(--ob-hair) !important; stroke-width: 8 !important; fill: none !important; }
+.results-score-dial-val { stroke: var(--ob-pink) !important; stroke-width: 8 !important; fill: none !important; }
+:root:not([data-theme="light"]) .results-score-dial-val { stroke: #8CC9FF !important; }
+:root[data-theme="light"] .results-score-dial-val { stroke: #FFFFFF !important; }
+
+/* selected product: checkbox tick stays visible */
+.bee-shelf-item.selected .shelf-checkbox svg,
+.bee-shelf-item.selected .shelf-checkbox polyline { color: #1280E0 !important; stroke: #1280E0 !important; }
+/* light theme: selected product row turns white with deep pink text */
+:root[data-theme="light"] .bee-character-card .bee-shelf-item.selected { background: #FFFFFF !important; border-color: #FFFFFF !important; }
+:root[data-theme="light"] .bee-character-card .bee-shelf-item.selected .bee-shelf-name { color: #0E5FA5 !important; }
+:root[data-theme="light"] .bee-character-card .bee-shelf-item.selected .shelf-checkbox { background: #137AD4 !important; border-color: #137AD4 !important; }
+:root[data-theme="light"] .bee-character-card .bee-shelf-item.selected .shelf-checkbox svg,
+:root[data-theme="light"] .bee-character-card .bee-shelf-item.selected .shelf-checkbox polyline { color: #FFFFFF !important; stroke: #FFFFFF !important; }
+
+/* round 3: contrast */
+:root .where-you-are-btn:hover, :root .where-you-are-btn.is-open,
+:root .where-you-are-btn:hover *, :root .where-you-are-btn.is-open * { color: var(--sel-ink) !important; }
+:root[data-theme="light"] .dot.partial { color: #FFFFFF !important; text-shadow: 0 0 2px #0B518E, 0 0 4px #0B518E, 0 1px 2px #0B518E; }
+.placard-you-are-here, .scrub-current-tag { background: var(--btn-bg) !important; color: var(--btn-ink) !important; }
+:root[data-theme="light"] .placard-you-are-here { background: #FFFFFF !important; color: #0E5FA5 !important; }
+:root[data-theme="light"] .scrub-current-tag { background: #1065B0 !important; color: #FFFFFF !important; }
+:root[data-theme="light"] .mindset-badge { background: #FFFFFF !important; color: #0E5FA5 !important; padding: 3px 10px; border-radius: 999px; }
+.ritual-step-item.checked .ritual-step-text { color: var(--ob-body) !important; opacity: 0.9; }
+
+/* round 4: hero logo + zoom card */
+.hero-character-emblem {
+  background: var(--logo-bg) !important; color: #FFFFFF !important;
+  border: 2px solid rgba(255, 255, 255, 0.7) !important; box-shadow: var(--logo-glow) !important;
+}
+.hero-character-emblem svg, .hero-emblem-svg { color: #FFFFFF !important; stroke: #FFFFFF !important; }
+.bm-clean-card { border-radius: 24px !important; padding: 28px 24px !important; overflow: hidden; }
+
+/* ---------- Bodywise blue palette (matched to brand references) ---------- */
+:root {
+  --logo-bg: linear-gradient(135deg, #2F7FD0 0%, #0A5CA8 50%, #003E7E 100%);
+  --logo-glow: 0 0 0 3px rgba(255, 255, 255, 0.9), 0 0 0 5px rgba(10, 92, 168, 0.55), 0 8px 22px -4px rgba(0, 62, 126, 0.7);
+  --btn-bg: linear-gradient(120deg, #2C86D8 0%, #0A5CA8 100%);
+  --sel-bg: linear-gradient(120deg, #2C86D8 0%, #0A5CA8 100%);
+  --sel-border: #A9D1F5;
+}
+:root[data-theme="light"] {
+  --ob-bg-0: #EEF5FC; --ob-bg-1: #DCEBF8; --ob-glass: #F5F9FE; --ob-glass-hi: #DCEBF8;
+  --ob-hair: #B6D3EE; --ob-head: #0B2D5B; --ob-body: #1D3F6E; --ob-label: #3A5F8E;
+  --ob-pink: #0A5CA8; --ob-hot: #00539B; --ob-soft: #1C6CB8; --ob-tint: #DCEBF8;
+  --ob-prism: linear-gradient(120deg, #0A5CA8, #003E7E);
+  --btn-bg: linear-gradient(120deg, #0A5CA8 0%, #00468A 100%);
+  --sel-bg: linear-gradient(120deg, #0A5CA8 0%, #00468A 100%);
+  --sel-border: #00468A;
+  --ob-shadow: rgba(0, 62, 126, 0.16);
+}
+:root[data-theme="light"] #tab-bar { background: #DCEBF8 !important; }
+:root:not([data-theme="light"]) {
+  --btn-bg: linear-gradient(120deg, #3A93E6 0%, #1565B8 100%);
+  --sel-bg: linear-gradient(120deg, #3A93E6 0%, #1565B8 100%);
+}
+/* logo more visible */
+.guide-avatar-badge { width: 46px !important; height: 46px !important; }
+.guide-avatar-badge svg { width: 60% !important; height: 60% !important; }
+.brand-name { font-weight: 800 !important; font-size: 1.15rem !important; letter-spacing: 0.01em; }
+:root:not([data-theme="light"]) .brand-name { color: #FFFFFF !important; text-shadow: 0 0 12px rgba(58, 147, 230, 0.6); }
+
+/* Hide intro strokes until each starts drawing (removes stray round-cap dot) */
+.intro-draw-path { opacity: 0; }
+.intro-stage.playing .intro-draw-path {
+  animation: introDraw var(--dur, 1s) cubic-bezier(0.65, 0, 0.35, 1) var(--delay, 0s) forwards,
+             introShowPath 0.01s linear var(--delay, 0s) forwards;
+}
+@keyframes introShowPath { to { opacity: 1; } }
+.intro-stage.dismissed .intro-draw-path { opacity: 1; }
+
+/* Be Bodywise wordmark: small "be" */
+.brand-name, .intro-wordmark { text-transform: lowercase; letter-spacing: -0.01em; }
+.be-small { font-size: 0.5em; font-weight: 700; margin-right: 0.12em; vertical-align: 0.55em; opacity: 0.9; }
+/* Logo: dark in light mode, light in dark mode */
+:root[data-theme="light"] .guide-avatar-badge { background: #0B2D5B !important; color: #FFFFFF !important; border-color: #0B2D5B !important; box-shadow: 0 4px 12px rgba(11,45,91,0.3) !important; }
+:root[data-theme="light"] .brand-name, :root[data-theme="light"] .intro-wordmark { color: #0B2D5B !important; text-shadow: none !important; }
+:root:not([data-theme="light"]) .guide-avatar-badge { background: #FFFFFF !important; color: #0B2D5B !important; border-color: #FFFFFF !important; }
+:root:not([data-theme="light"]) .brand-name, :root:not([data-theme="light"]) .intro-wordmark { color: #FFFFFF !important; }
+/* Product picker: allow scrolling so Continue is reachable */
+.bee-onboarding-stage { overflow-y: auto !important; -webkit-overflow-scrolling: touch; justify-content: safe center !important; padding-top: 76px !important; padding-bottom: 40px !important; }
+.bee-character-card { flex-shrink: 0; max-height: none !important; }

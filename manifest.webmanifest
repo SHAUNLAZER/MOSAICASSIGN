@@ -1,0 +1,26 @@
+{
+  "name": "Progress Companion",
+  "short_name": "Progress",
+  "description": "A daily companion for your routine. Set a goal, check in, and watch real change take shape.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#E4F2FF",
+  "theme_color": "#2E9DFF",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ],
+  "id": "./",
+  "scope": "./"
+}

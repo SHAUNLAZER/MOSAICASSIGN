@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Progress Companion — track your wellness routine, set honest expectations, and measure visible changes.">
+  <meta property="og:title" content="Progress Companion">
+  <meta property="og:description" content="Track your wellness routine, set honest expectations, and measure visible changes.">
+  <meta name="theme-color" content="#2E9DFF">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="icon" type="image/svg+xml" href="icon.svg">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <title>Progress Companion</title>
+  <link rel="stylesheet" href="style.css?v=118">
+  <link rel="stylesheet" href="obsidian.css?v=5">
+  <link rel="stylesheet" href="fixes.css?v=3">
+  <link rel="stylesheet" href="v7.css?v=2">
+  <link rel="stylesheet" href="tour.css?v=5">
+  <script src="obsidian.js?v=4"></script>
+</head>
+<body>
+  <!-- BRAND INTRO & FULL-SCREEN BEE ONBOARDING TAKEOVER -->
+  <div id="intro-stage" class="intro-stage playing" role="dialog" aria-modal="true" aria-label="Brand introduction">
+    <div class="intro-letters" id="intro-letters" aria-hidden="true">
+      <svg viewBox="0 0 70 100" class="intro-glyph" fill="none"><g stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+        <path id="intro-stroke-b" class="intro-draw-path" style="--dur:0.6s;--delay:0.5s" pathLength="1" d="M22 22 L14 86"/>
+        <path class="intro-draw-path" style="--dur:1.0s;--delay:1.1s" pathLength="1" d="M6 26 Q38 8 50 22 Q56 38 26 50 Q60 52 58 72 Q50 92 12 84"/></g></svg>
+      <svg viewBox="0 0 30 30" class="intro-plus" fill="none"><g stroke="currentColor" stroke-width="5" stroke-linecap="round">
+        <path class="intro-draw-path" style="--dur:0.35s;--delay:2.2s" pathLength="1" d="M15 5 V25"/>
+        <path class="intro-draw-path" style="--dur:0.35s;--delay:2.5s" pathLength="1" d="M5 15 H25"/></g></svg>
+      <svg viewBox="0 0 70 100" class="intro-glyph" fill="none">
+        <path id="intro-stroke-w" class="intro-draw-path" style="--dur:1.4s;--delay:2.9s" pathLength="1" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" d="M10 14 Q6 60 18 88 Q26 60 35 36 Q44 62 52 88 Q64 60 60 14"/></svg>
+    </div>
+    <div class="intro-canvas" id="intro-canvas">
+      <svg id="intro-final-figure" class="intro-final-figure" viewBox="0 0 220 280" fill="none" aria-hidden="true"><g stroke="currentColor" stroke-width="11" stroke-linecap="round" stroke-linejoin="round">
+        <path class="intro-draw-path" style="--dur:1.6s;--delay:5.1s" pathLength="1" d="M10 40 Q50 72 98 56 C142 68 136 94 108 100 C152 114 150 142 104 150 C78 158 68 176 68 202 L56 266 L100 192 L118 266 L164 150"/>
+        <path class="intro-draw-path" style="--dur:0.8s;--delay:6.6s" pathLength="1" d="M130 68 Q196 46 210 8"/>
+        <circle class="intro-draw-path" style="--dur:0.5s;--delay:7.2s" pathLength="1" cx="120" cy="32" r="11" stroke-width="8"/></g></svg>
+      <div id="intro-wordmark" class="intro-wordmark"><span class="be-small">be</span>bodywise</div>
+    </div>
+    <!-- BEE Full-Screen Interactive Onboarding Takeover -->
+    <div id="bee-onboarding-stage" class="bee-onboarding-stage" style="display:none;" aria-live="polite"></div>
+  </div>
+
+  <div id="app">
+    <header id="app-header" role="banner"></header>
+    <main id="app-content" role="main"></main>
+    <nav id="tab-bar" role="navigation" aria-label="Main navigation">
+      <a href="#today" data-scroll="today" class="active" role="tab">
+        <svg class="tab-icon" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+          <polyline points="22 4 12 14.01 9 11.01"/>
+        </svg>
+        <span>Daily Ritual</span>
+      </a>
+      <a href="#timeline" data-scroll="timeline" role="tab">
+        <svg class="tab-icon" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/>
+          <polyline points="12 6 12 12 16 14"/>
+        </svg>
+        <span>Timeline</span>
+      </a>
+      <a href="#mind" data-scroll="mind" role="tab">
+        <svg class="tab-icon" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z"/>
+          <path d="M12 7v5l3 3"/>
+        </svg>
+        <span>Mind Space</span>
+      </a>
+      <a href="#results" data-scroll="results" role="tab">
+        <svg class="tab-icon" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 3v18h18"/>
+          <path d="m19 9-5 5-4-4-3 3"/>
+        </svg>
+        <span>Results</span>
+      </a>
+      <a href="#companion" data-scroll="companion" role="tab">
+        <svg class="tab-icon" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+          <polyline points="9 22 9 12 15 12 15 22"/>
+        </svg>
+        <span>About</span>
+      </a>
+    </nav>
+  </div>
+  <button type="button" class="guide-floating-btn" id="guide-floating-btn" aria-label="Ask the Guide">
+    <span class="guide-floating-icon">
+      <svg width="18" height="18" viewBox="0 0 447 447" fill="currentColor" fill-rule="evenodd" aria-hidden="true">
+        <path d="M 333 64 L 344 66 L 344 68 L 335 89 L 325 103 L 305 123 L 283 139 L 279 141 L 274 132 L 299 113 L 316 96 L 326 82 L 333 65 Z M 229 81 L 244 82 L 253 90 L 256 97 L 256 105 L 253 113 L 247 119 L 240 122 L 227 121 L 218 114 L 214 104 L 215 95 L 218 89 L 223 84 L 228 82 Z M 240 93 L 232 92 L 227 96 L 227 107 L 233 111 L 240 110 L 245 104 L 245 99 L 241 94 Z M 110 104 L 112 104 L 121 116 L 132 124 L 154 133 L 181 137 L 242 136 L 256 139 L 262 142 L 267 148 L 267 159 L 260 166 L 218 180 L 212 186 L 214 188 L 264 187 L 276 190 L 283 196 L 285 201 L 285 210 L 283 214 L 275 221 L 260 227 L 212 236 L 188 243 L 179 248 L 171 256 L 166 267 L 165 326 L 166 353 L 168 354 L 201 298 L 218 266 L 220 259 L 232 260 L 233 359 L 249 332 L 264 298 L 274 265 L 278 240 L 279 238 L 290 240 L 282 280 L 267 321 L 249 356 L 231 383 L 220 379 L 219 288 L 168 377 L 157 375 L 154 331 L 154 273 L 156 261 L 160 252 L 165 245 L 177 236 L 201 227 L 254 217 L 268 212 L 274 207 L 274 203 L 272 201 L 262 198 L 212 199 L 207 197 L 201 189 L 201 181 L 206 174 L 213 170 L 250 158 L 254 156 L 256 152 L 251 149 L 240 147 L 178 148 L 152 144 L 137 139 L 114 125 L 102 110 L 109 105 Z"/>
+      </svg>
+    </span>
+    <span>Ask the Guide</span>
+  </button>
+  <script src="content.js?v=22"></script>
+  <script src="bodymap.js?v=19"></script>
+  <script src="app.js?v=31"></script>
+  <script src="tour.js?v=6"></script>
+</body>
+</html>

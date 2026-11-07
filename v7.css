@@ -1,0 +1,240 @@
+/* v7.css — loaded last. Content & UI refresh:
+   header logo in dark mode, body map figure contrast, DAILY RITUAL checklist,
+   timeline placard colours + week track alignment, breathing pacer fill,
+   daily mindset card, grouped shelf picker, bathroom shelf cycle + refill,
+   good-to-know card, hero emblem alignment. */
+
+/* ---------- Header logo: figure visible on the white dark-mode badge ---------- */
+:root:not([data-theme="light"]) .header-brand .guide-avatar-badge svg,
+:root:not([data-theme="light"]) .header-brand .guide-avatar-badge svg path {
+  color: #0B2D5B !important;
+  fill: #0B2D5B !important;
+}
+:root:not([data-theme="light"]) .header-brand .guide-avatar-badge {
+  box-shadow: 0 0 0 2px rgba(95, 180, 255, 0.55), 0 0 18px rgba(95, 180, 255, 0.45) !important;
+}
+
+/* ---------- Body map figure: clearly highlighted in both themes ---------- */
+:root:not([data-theme="light"]) .bm-figure-card .bm-figure,
+:root:not([data-theme="light"]) .bm-zoom-svg .bm-figure {
+  fill: #5FB4FF !important;
+  filter: drop-shadow(0 0 6px rgba(95, 180, 255, 0.55));
+}
+:root[data-theme="light"] .bm-figure-card .bm-figure {
+  fill: #FFFFFF !important;
+  filter: drop-shadow(0 2px 6px rgba(0, 40, 90, 0.35));
+}
+:root[data-theme="light"] .bm-zoom-svg .bm-figure { fill: #0A5CA8 !important; }
+
+/* ---------- DAILY RITUAL ---------- */
+.section-title-caps { letter-spacing: 0.06em; }
+.ritual-card-sub { margin: 0; font-size: 0.8rem; color: var(--ob-label); }
+.ritual-slot-head {
+  display: flex; align-items: center; gap: 8px;
+  margin: 14px 2px 8px; font-size: 0.78rem; font-weight: 700;
+  letter-spacing: 0.06em; text-transform: uppercase; color: var(--ob-label);
+}
+.ritual-slot-head[hidden] { display: none !important; }
+.ritual-slot-pill {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 34px; padding: 2px 8px; border-radius: 999px;
+  font-size: 0.7rem; font-weight: 800; letter-spacing: 0.04em;
+}
+.ritual-slot-am { background: #FFD27A; color: #5A3B00; }
+.ritual-slot-pm { background: #9DB8FF; color: #14275C; }
+.ritual-step-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.ritual-step-product { font-weight: 700; font-size: 0.92rem; color: var(--ob-head); line-height: 1.3; }
+.ritual-step-how { font-size: 0.84rem; color: var(--ob-body); line-height: 1.4; }
+.ritual-step-freq { font-size: 0.72rem; font-weight: 600; color: var(--ob-label); letter-spacing: 0.02em; }
+
+/* ---------- Timeline: week track on one line ---------- */
+.timeline-scrubber-wrapper { padding-top: 24px !important; }
+.timeline-scrubber-track { align-items: stretch !important; }
+.interactive-week-card,
+.interactive-week-card:hover,
+.interactive-week-card.scrub-active,
+.interactive-week-card.is-current { transform: none !important; margin: 0 !important; }
+.scrub-current-tag {
+  top: -11px !important; left: 50% !important; transform: translateX(-50%) !important;
+  line-height: 1.4;
+}
+
+/* Placard header: duration, status and "you are here" share one row */
+.placard-meta-row { display: flex !important; align-items: center !important; gap: 10px !important; flex-wrap: wrap; }
+.placard-meta-row .placard-you-are-here { margin: 0 !important; display: inline-block !important; }
+.placard-header { margin-bottom: 12px; }
+
+/* Phase title: title case on its own colour */
+:root[data-theme] .placard-title {
+  display: inline-block;
+  text-transform: capitalize;
+  background: linear-gradient(120deg, #0F6E8C 0%, #1A9BB8 100%) !important;
+  color: #FFFFFF !important;
+  padding: 6px 16px;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px -8px rgba(15, 110, 140, 0.8);
+}
+
+/* "What is happening beneath" and "What to expect": blue-grey-blue gradients */
+:root[data-theme] .placard-bullet-beneath,
+:root[data-theme] .placard-bullet-expect,
+:root[data-theme] .placard-bullet-shelf {
+  border-radius: 12px !important;
+  border-left: 3px solid rgba(255, 255, 255, 0.55) !important;
+  padding: 12px 16px !important;
+}
+:root[data-theme] .placard-bullet-beneath {
+  background: linear-gradient(120deg, #1E4C80 0%, #4B5D73 50%, #1F5C9E 100%) !important;
+}
+:root[data-theme] .placard-bullet-expect {
+  background: linear-gradient(120deg, #2B5F99 0%, #5E6E82 50%, #2E77C2 100%) !important;
+}
+:root[data-theme] .placard-bullet-shelf {
+  background: linear-gradient(120deg, #173F6B 0%, #33465C 55%, #1A4F8A 100%) !important;
+}
+:root[data-theme] :is(.placard-bullet-beneath, .placard-bullet-expect, .placard-bullet-shelf) .placard-bullet-label { color: #DCEBFA !important; }
+:root[data-theme] :is(.placard-bullet-beneath, .placard-bullet-expect, .placard-bullet-shelf) .placard-bullet-text { color: #FFFFFF !important; }
+.placard-shelf-list { list-style: none; margin: 4px 0 0; padding: 0; display: grid; gap: 8px; }
+.placard-shelf-list li { display: flex; flex-direction: column; gap: 1px; font-size: 0.86rem; color: #E8F2FC; line-height: 1.4; }
+.placard-shelf-list strong { color: #FFFFFF; font-size: 0.88rem; }
+
+/* ---------- Breathing pacer: fills the ring on the in-breath, empties on the out-breath ---------- */
+.bw-pacer { width: 200px !important; height: 200px !important; }
+.bw-pacer .breathing-circle-track { inset: 0; border-width: 4px !important; }
+:root[data-theme] .bw-pacer .breathing-circle-core {
+  position: absolute; inset: 0;
+  width: 100% !important; height: 100% !important; padding: 0 !important;
+  background: transparent !important; box-shadow: none !important;
+  border-radius: 50%;
+  animation: none !important; scale: 1 !important; transform: none !important;
+  display: flex; align-items: center; justify-content: center;
+}
+:root[data-theme] .bw-pacer .breathing-circle-core:hover,
+:root[data-theme] .bw-pacer .breathing-circle-core:active { transform: none !important; box-shadow: none !important; }
+.bw-pacer .breathing-fill {
+  position: absolute; inset: 4px; border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #8CCBFF 0%, #3A93E6 45%, #1565B8 100%);
+  box-shadow: 0 0 28px rgba(58, 147, 230, 0.55);
+  transform: scale(0.6);
+  transition: transform 0.6s ease;
+  pointer-events: none;
+}
+.bw-pacer .breathing-circle-core.is-running.inhaling .breathing-fill { animation: bwFillIn 5.3s ease-in-out forwards; }
+.bw-pacer .breathing-circle-core.is-running.holding .breathing-fill { transform: scale(1); animation: bwFillHold 5.3s ease-in-out forwards; }
+.bw-pacer .breathing-circle-core.is-running.exhaling .breathing-fill { animation: bwFillOut 5.3s ease-in-out forwards; }
+@keyframes bwFillIn { from { transform: scale(0); } to { transform: scale(1); } }
+@keyframes bwFillHold { 0%, 100% { transform: scale(1); box-shadow: 0 0 28px rgba(58, 147, 230, 0.55); } 50% { transform: scale(1); box-shadow: 0 0 40px rgba(140, 203, 255, 0.85); } }
+@keyframes bwFillOut { from { transform: scale(1); } to { transform: scale(0); } }
+:root[data-theme] .bw-pacer .breathing-circle-core .breathing-label {
+  position: relative; z-index: 1; max-width: 150px; text-align: center;
+  color: #FFFFFF !important; font-weight: 700; font-size: 1rem;
+  text-shadow: 0 1px 8px rgba(0, 30, 70, 0.7);
+}
+:root[data-theme] .bw-pacer .breathing-circle-track { border-color: #5FB4FF !important; }
+@media (prefers-reduced-motion: reduce) {
+  .bw-pacer .breathing-circle-core.is-running .breathing-fill { animation-duration: 0.01s; }
+}
+
+/* ---------- Daily mindset card ---------- */
+:root[data-theme] .bw-mindset.mindset-card {
+  background: linear-gradient(145deg, #0B3A75 0%, #1565B8 55%, #2C9BE8 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  box-shadow: 0 18px 40px -18px rgba(11, 58, 117, 0.9) !important;
+  padding: 28px !important;
+  overflow: hidden;
+  justify-content: flex-start !important;
+  color: #FFFFFF;
+}
+:root[data-theme] .bw-mindset.mindset-card::after {
+  content: ""; position: absolute; right: -60px; bottom: -60px; width: 200px; height: 200px;
+  border-radius: 50%; background: radial-gradient(circle, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0));
+  pointer-events: none;
+}
+.bw-mindset-top { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+:root[data-theme] .bw-mindset .mindset-badge {
+  color: #FFFFFF !important; background: rgba(255, 255, 255, 0.16) !important;
+  padding: 4px 12px !important; border-radius: 999px; letter-spacing: 0.08em; font-size: 0.72rem; font-weight: 800;
+}
+:root[data-theme] .bw-mindset .mindset-card-shuffle-hint {
+  color: #FFFFFF !important; opacity: 1 !important; font-weight: 700 !important;
+  background: rgba(255, 255, 255, 0.18); padding: 5px 11px; border-radius: 999px;
+  text-shadow: 0 1px 4px rgba(0, 30, 70, 0.5);
+}
+:root[data-theme] .bw-mindset .mindset-card-shuffle-hint svg { stroke: #FFFFFF; }
+.bw-mindset-body {
+  flex: 1; display: flex; flex-direction: column; justify-content: center;
+  padding: 18px 4px 8px; position: relative; z-index: 1;
+}
+.bw-mindset-mark {
+  font-family: 'Instrument Serif', Georgia, serif; font-size: 4.5rem; line-height: 0.5;
+  color: rgba(255, 255, 255, 0.45); height: 0.42em;
+}
+.bw-mindset-mark-open { align-self: flex-start; margin-bottom: 14px; }
+.bw-mindset-mark-close { align-self: flex-end; margin-top: 18px; }
+:root[data-theme] .bw-mindset .mindset-quote {
+  color: #FFFFFF !important; font-family: 'Instrument Serif', Georgia, serif; font-style: italic;
+  font-size: clamp(1.75rem, 1.2rem + 1.4vw, 2.35rem); line-height: 1.22; font-weight: 400;
+  margin: 0; text-wrap: pretty;
+}
+:root[data-theme] .bw-mindset .bw-mindset-theme {
+  display: inline-flex; align-items: center; gap: 8px; align-self: flex-start;
+  margin: 10px 0 0 !important; position: relative; z-index: 1;
+  color: #FFFFFF !important; font-weight: 600; font-size: 0.85rem;
+  background: rgba(255, 255, 255, 0.14); border: 1px solid rgba(255, 255, 255, 0.22);
+  padding: 5px 12px; border-radius: 999px;
+}
+.bw-mindset-theme-label {
+  font-size: 0.66rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase;
+  color: #BFE0FF;
+}
+
+/* ---------- Shelf picker: grouped sub-sections ---------- */
+.shelf-products-grouped { display: block !important; }
+.shelf-group { margin-bottom: 16px; }
+.shelf-group:last-child { margin-bottom: 0; }
+.shelf-group-head { display: flex; flex-direction: column; gap: 2px; margin: 0 2px 8px; }
+.shelf-group-title { font-size: 0.8rem; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ob-head); }
+.shelf-group-hint { font-size: 0.78rem; color: var(--ob-label); }
+.shelf-group-items { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 8px; }
+.bee-shelf-grouped .shelf-group-items { grid-template-columns: 1fr; }
+.bee-shelf-grouped .shelf-group-title { color: #FFFFFF; }
+.bee-shelf-grouped .shelf-group-hint { color: #CFE6FB; }
+
+/* ---------- Bathroom shelf: cycle pill + centred refill ---------- */
+.shelf-cycle-pill {
+  flex-shrink: 0; font-size: 0.78rem; font-weight: 700; white-space: nowrap;
+  padding: 4px 10px; border-radius: 999px;
+  background: var(--ob-glass); color: var(--ob-pink); border: 1px solid var(--ob-hair);
+}
+:root:not([data-theme="light"]) .shelf-cycle-pill { color: #B8DEFF; }
+.shelf-refill-row { display: flex; justify-content: center; margin-top: 14px; }
+.shelf-refill-btn { display: inline-flex !important; align-items: center; justify-content: center; text-align: center; }
+
+/* ---------- Results: Good to know ---------- */
+.gtk-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+@media (max-width: 760px) { .gtk-grid { grid-template-columns: 1fr; } }
+.gtk-tile, .gtk-shelf {
+  background: var(--ob-glass-hi); border: 1px solid var(--ob-hair); border-radius: 14px; padding: 14px 16px;
+}
+.gtk-shelf { margin-top: 12px; }
+.gtk-tile-title { font-weight: 800; font-size: 0.84rem; color: var(--ob-head); margin-bottom: 6px; }
+.gtk-tile-text { font-size: 0.86rem; line-height: 1.5; color: var(--ob-body); }
+.gtk-list { margin: 0; padding-left: 18px; font-size: 0.86rem; color: var(--ob-body); line-height: 1.6; }
+.gtk-shelf-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px; }
+.gtk-shelf-list li { display: flex; flex-direction: column; gap: 2px; font-size: 0.84rem; color: var(--ob-body); line-height: 1.45; }
+.gtk-shelf-list strong { color: var(--ob-head); font-size: 0.88rem; }
+
+/* ---------- Hero emblem: glow stays centred on the logo and inside the section ---------- */
+.section-companion { padding-top: 1px; }
+.hero-character-reveal { width: 68px; height: 68px; margin: 40px 0 24px 8px !important; }
+.hero-character-glow {
+  width: 96px !important; height: 96px !important;
+  left: 50%; top: 50%; margin: -48px 0 0 -48px;
+  animation-name: bwHeroGlow !important;
+}
+@keyframes bwHeroGlow { 0% { transform: scale(0.95); opacity: 0.6; } 100% { transform: scale(1.08); opacity: 1; } }
+
+/* ---------- Daily status calendar: week and month rows share one centred column ---------- */
+.bw-dotgrid { display: flex; flex-direction: column; align-items: center; width: 100%; }
+.bw-dotgrid .dot-row { justify-content: center; width: max-content; margin-left: auto; margin-right: auto; }
+.bw-dotgrid .dot-row-label { width: 48px; min-width: 48px; flex: 0 0 48px; text-align: right; padding-right: 2px; }

@@ -1,0 +1,247 @@
+/* tour.css — guided feature tour (spotlight + logo character). */
+
+/* Header "Tour" button: a compact round character button so the header keeps its layout.
+   On phones the header has no spare room, so the tour starts from Menu instead. */
+.header-tour-btn {
+  flex: 0 0 auto;
+  width: 40px; height: 40px; min-width: 40px; padding: 0 !important;
+  justify-content: center; border-radius: 50% !important;
+}
+.header-tour-btn > span:last-child {
+  position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
+}
+.header-tour-btn .bwt-head-icon {
+  display: inline-grid; place-items: center;
+  width: 28px; height: 28px; border-radius: 50%;
+  background: #1F5FA8; color: #FFFFFF;
+  box-shadow: 0 0 0 1.5px rgba(255, 255, 255, 0.85) inset;
+}
+.header-tour-btn .bwt-head-icon svg { width: 20px; height: 20px; }
+.header-tour-btn:hover .bwt-head-icon { animation: bwtFloat 1.4s ease-in-out infinite; }
+@media (max-width: 767px) {
+  .header-tour-btn { display: none !important; }
+}
+/* Where the header is tight, tighten link spacing a touch to make room for the Tour button. */
+@media (min-width: 1024px) and (max-width: 1365px) {
+  .header-inner:has(.header-tour-btn) .header-nav { gap: 10px; }
+  .header-inner:has(.header-tour-btn) .header-actions { gap: 8px; }
+}
+/* Too tight for an extra button here; the tour stays available in the Menu. */
+@media (min-width: 1024px) and (max-width: 1199px) {
+  .header-tour-btn { display: none !important; }
+}
+
+/* Root layer */
+.bwt-root { position: fixed; inset: 0; z-index: 9000; pointer-events: auto; display: none; cursor: pointer; touch-action: none; }
+/* Full-screen catcher: swallows every click so nothing on the page underneath reacts. */
+.bwt-catch { position: absolute; inset: 0; }
+.bwt-edge { position: absolute; top: 50%; width: 44px; height: 44px; margin-top: -22px; border-radius: 50%;
+  background: rgba(95, 180, 255, 0.16); border: 1px solid rgba(95, 180, 255, 0.45); opacity: 0; transition: opacity 0.25s ease; }
+.bwt-edge::after { content: ''; position: absolute; left: 50%; top: 50%; width: 10px; height: 10px;
+  border-top: 2px solid #8CCBFF; border-left: 2px solid #8CCBFF; }
+.bwt-edge-back { left: 14px; } .bwt-edge-back::after { transform: translate(-30%, -50%) rotate(-45deg); }
+.bwt-edge-next { right: 14px; } .bwt-edge-next::after { transform: translate(-70%, -50%) rotate(135deg); }
+@media (hover: hover) {
+  .bwt-root.is-open:not(.is-first) .bwt-catch:hover .bwt-edge-back,
+  .bwt-root.is-open .bwt-catch:hover .bwt-edge-next { opacity: 0.85; }
+}
+.bwt-root.is-chat .bwt-edge { display: none; }
+.bwt-root.is-open { display: block; }
+
+/* Spotlight: a hole in a dimmed page */
+.bwt-spot {
+  position: fixed; left: 0; top: 0; width: 0; height: 0;
+  border-radius: 20px;
+  box-shadow:
+    0 0 0 3px rgba(95, 180, 255, 0.95),
+    0 0 28px 6px rgba(95, 180, 255, 0.45),
+    0 0 0 200vmax rgba(4, 14, 30, 0.68);
+  transition: transform 0.35s cubic-bezier(.22,1,.36,1), width 0.35s cubic-bezier(.22,1,.36,1),
+              height 0.35s cubic-bezier(.22,1,.36,1), border-radius 0.35s ease, opacity 0.25s ease;
+  animation: bwtSpotPulse 2.4s ease-in-out infinite;
+  pointer-events: none;
+}
+/* When a section is taller than the screen, the frame fades out at its cut edge. */
+.bwt-spot::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 56px; border-radius: inherit;
+  background: linear-gradient(to bottom, transparent, rgba(4, 14, 30, 0.75)); opacity: 0; transition: opacity 0.3s ease; }
+.bwt-spot.is-cropped::after { opacity: 1; }
+@keyframes bwtSpotPulse {
+  0%, 100% { box-shadow: 0 0 0 3px rgba(95, 180, 255, 0.95), 0 0 22px 4px rgba(95, 180, 255, 0.35), 0 0 0 200vmax rgba(4, 14, 30, 0.68); }
+  50% { box-shadow: 0 0 0 3px rgba(140, 203, 255, 1), 0 0 36px 10px rgba(95, 180, 255, 0.55), 0 0 0 200vmax rgba(4, 14, 30, 0.68); }
+}
+
+/* Card: speech bubble */
+.bwt-card {
+  position: fixed; left: 0; top: 0; z-index: 1;
+  width: min(760px, calc(100vw - 24px));
+  pointer-events: auto; cursor: default;
+  transition: top 0.4s cubic-bezier(.22,1,.36,1), left 0.4s cubic-bezier(.22,1,.36,1), width 0.4s cubic-bezier(.22,1,.36,1);
+}
+
+/* The logo character: travels to each step and points at it */
+.bwt-char {
+  --bwt-lean: 0deg;
+  position: fixed; left: 0; top: 0; z-index: 2;
+  width: 64px; height: 64px;
+  pointer-events: none;
+  transition: left 0.5s cubic-bezier(.22,1,.36,1), top 0.5s cubic-bezier(.22,1,.36,1);
+}
+.bwt-hop { width: 100%; height: 100%; }
+.bwt-badge {
+  position: relative; z-index: 1; box-sizing: border-box;
+  width: 100%; height: 100%; border-radius: 50%;
+  display: grid; place-items: center;
+  background: radial-gradient(circle at 35% 30%, #3A7FCC 0%, #1F5FA8 55%, #164A86 100%);
+  color: #FFFFFF;
+  box-shadow: inset 0 0 0 3px rgba(255, 255, 255, 0.9), inset 0 0 0 6px #1F5FA8, 0 10px 24px -8px rgba(0, 20, 50, 0.7), 0 0 22px rgba(95, 180, 255, 0.5);
+  animation: bwtFloat 2.8s ease-in-out infinite;
+}
+.bwt-badge svg { width: 76%; height: 76%; transform: rotate(var(--bwt-lean)); transition: transform 0.4s ease; }
+@keyframes bwtFloat { 0%, 100% { translate: 0 0; } 50% { translate: 0 -6px; } }
+
+/* Pointing arrow orbiting the character */
+.bwt-pointer {
+  position: absolute; left: 50%; top: 50%; width: 0; height: 0; z-index: 2;
+  transition: transform 0.3s ease;
+}
+.bwt-arrow {
+  position: absolute; left: 38px; top: -11px;
+  width: 0; height: 0;
+  border-top: 11px solid transparent; border-bottom: 11px solid transparent;
+  border-left: 18px solid #5FB4FF;
+  filter: drop-shadow(0 0 6px rgba(95, 180, 255, 0.8));
+  animation: bwtPoint 1.1s ease-in-out infinite;
+}
+@keyframes bwtPoint { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(7px); } }
+@keyframes bwtHop { 0% { transform: translateY(0) scale(1); } 40% { transform: translateY(-14px) scale(1.06); } 100% { transform: translateY(0) scale(1); } }
+.bwt-char.is-speaking .bwt-hop { animation: bwtHop 0.55s cubic-bezier(.3,1.6,.5,1); }
+.bwt-bubble {
+  position: relative; flex: 1 1 auto; min-width: 0;
+  background: var(--ob-glass, #10223A);
+  color: var(--ob-body, #C9D6E6);
+  border: 1px solid var(--ob-hair, #2B4766);
+  border-radius: 18px;
+  padding: 14px 16px 12px;
+  box-shadow: 0 22px 50px -18px rgba(0, 10, 30, 0.75);
+}
+
+.bwt-top { padding-left: 70px; min-height: 28px; display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 4px; }
+.bwt-step { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ob-pink, #5FB4FF); }
+.bwt-skip {
+  background: none; border: none; cursor: pointer; padding: 6px 4px;
+  font: inherit; font-size: 0.8rem; font-weight: 600; color: var(--ob-label, #9FB2C8);
+  text-decoration: underline; text-underline-offset: 3px;
+}
+.bwt-skip:hover { color: var(--ob-head, #FFFFFF); }
+.bwt-title { margin: 0 0 8px; font-size: 1.08rem; font-weight: 700; color: var(--ob-head, #FFFFFF); line-height: 1.25; }
+
+.bwt-lines { display: grid; gap: 8px; }
+@media (min-width: 900px) { .bwt-root:not(.is-chat) .bwt-lines { grid-template-columns: 1fr 1fr; gap: 18px; } }
+.bwt-note { display: block; margin-top: 4px; font-style: normal; font-size: 0.8rem; color: var(--ob-pink, #5FB4FF); }
+.bwt-foot-left { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.bwt-hint { font-size: 0.72rem; color: var(--ob-label, #9FB2C8); }
+.bwt-line { margin: 0; font-size: 0.9rem; line-height: 1.5; color: var(--ob-body, #C9D6E6); }
+.bwt-tag {
+  display: block; margin-bottom: 1px;
+  font-size: 0.66rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--ob-label, #9FB2C8);
+}
+.bwt-card.is-speaking .bwt-title,
+.bwt-card.is-speaking .bwt-line { animation: bwtSay 0.45s ease both; }
+.bwt-card.is-speaking .bwt-line:nth-child(1) { animation-delay: 0.12s; }
+.bwt-card.is-speaking .bwt-line:nth-child(2) { animation-delay: 0.32s; }
+@keyframes bwtSay { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+.bwt-foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 12px; }
+.bwt-dots { display: flex; gap: 5px; flex-wrap: wrap; }
+.bwt-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--ob-hair, #2B4766); transition: background 0.2s, width 0.2s; }
+.bwt-dot.is-done { background: color-mix(in srgb, var(--ob-pink, #5FB4FF) 45%, transparent); }
+.bwt-dot.is-on { width: 18px; border-radius: 999px; background: var(--ob-pink, #5FB4FF); }
+.bwt-nav { display: flex; gap: 8px; flex-shrink: 0; }
+.bwt-btn {
+  min-height: 40px; padding: 8px 16px; border-radius: 999px; cursor: pointer;
+  font: inherit; font-size: 0.88rem; font-weight: 700;
+  border: 1px solid var(--ob-hair, #2B4766);
+  background: var(--ob-glass-hi, #18304D); color: var(--ob-head, #FFFFFF);
+}
+.bwt-btn:disabled { opacity: 0.4; cursor: default; }
+.bwt-next { background: #2687DC; border-color: #2687DC; color: #FFFFFF; }
+.bwt-next:hover { background: #1F76C4; }
+.bwt-btn:focus-visible, .bwt-skip:focus-visible { outline: 2px solid #5FB4FF; outline-offset: 2px; }
+
+@media (max-width: 560px) {
+  .bwt-char { width: 54px; height: 54px; }
+  .bwt-top { padding-left: 60px; }
+  .bwt-arrow { left: 31px; top: -9px; border-top-width: 9px; border-bottom-width: 9px; border-left-width: 14px; }
+  .bwt-bubble { padding: 12px 13px 10px; }
+  .bwt-title { font-size: 1rem; }
+  .bwt-line { font-size: 0.84rem; }
+  .bwt-btn { padding: 8px 13px; }
+  .bwt-hint { font-size: 0.68rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bwt-spot, .bwt-badge, .bwt-arrow,
+  .bwt-char.is-speaking .bwt-hop,
+  .bwt-card.is-speaking .bwt-title,
+  .bwt-card.is-speaking .bwt-line { animation: none !important; }
+  .bwt-spot, .bwt-card, .bwt-char, .bwt-spot::after { transition: none !important; }
+}
+
+/* ---------- Floating character button: start or replay the tour any time ---------- */
+.bwt-fab {
+  position: fixed; left: 24px; bottom: 24px; z-index: 8990;
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 6px 18px 6px 6px; border-radius: 999px; cursor: pointer;
+  font-family: inherit; font-weight: 700; font-size: 0.95rem;
+  color: var(--ob-head); background: var(--ob-glass);
+  border: 1.5px solid #5FB4FF;
+  box-shadow: 0 0 0 4px rgba(95, 180, 255, 0.18), 0 10px 26px -8px rgba(11, 58, 117, 0.85);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+}
+.bwt-fab:hover { transform: translateY(-2px); box-shadow: 0 0 0 6px rgba(95, 180, 255, 0.26), 0 14px 30px -8px rgba(11, 58, 117, 0.9); }
+.bwt-fab:focus-visible { outline: 3px solid #5FB4FF; outline-offset: 3px; }
+.bwt-fab-badge {
+  width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center;
+  background: radial-gradient(circle at 35% 30%, #2C9BE8 0%, #1565B8 55%, #0B3A75 100%);
+  color: #FFFFFF; border: 2px solid rgba(255, 255, 255, 0.85);
+  animation: bwtFabFloat 3.2s ease-in-out infinite;
+}
+.bwt-fab-badge svg { width: 30px; height: 30px; }
+@keyframes bwtFabFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+html.bwt-on .bwt-fab { opacity: 0; pointer-events: none; }
+@media (max-width: 767px) {
+  .bwt-fab { left: 12px; bottom: 76px; padding: 4px; gap: 0; }
+  .bwt-fab-label { display: none; }
+  .bwt-fab-badge { width: 46px; height: 46px; }
+}
+@media (prefers-reduced-motion: reduce) { .bwt-fab-badge { animation: none; } }
+
+/* Short screens: a tighter card leaves more room for the section. */
+@media (max-height: 720px) {
+  .bwt-hint { display: none; }
+  .bwt-bubble { padding: 10px 14px 10px; }
+  .bwt-title { margin-bottom: 4px; font-size: 1rem; }
+  .bwt-line { font-size: 0.82rem; line-height: 1.4; }
+  .bwt-lines { gap: 4px; }
+  .bwt-foot { margin-top: 8px; }
+  .bwt-btn { min-height: 34px; padding: 6px 13px; }
+}
+
+/* Fit "Shop Official Formulas" pill inside the top bar */
+.header-inner { min-width: 0; }
+.header-nav { min-width: 0; flex-shrink: 1; }
+.header-nav-link { white-space: nowrap; }
+.header-actions { flex-shrink: 0; flex-wrap: nowrap; }
+.header-actions > * { white-space: nowrap; flex-shrink: 0; }
+.header-shop-btn.header-store-pill { white-space: nowrap; line-height: 1.2; padding: 7px 13px; }
+.header-shop-btn.header-store-pill svg { flex-shrink: 0; }
+@media (max-width: 1360px) {
+  .header-nav { gap: 14px !important; }
+  .header-nav-link { font-size: 0.82rem; }
+  .header-shop-btn.header-store-pill { font-size: 0.78rem; padding: 6px 11px; }
+}
+@media (max-width: 1180px) {
+  .header-shop-btn.header-store-pill span { display: none; }
+  .header-shop-btn.header-store-pill::before { content: "Shop"; }
+}

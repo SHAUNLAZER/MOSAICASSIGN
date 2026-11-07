@@ -3,7 +3,7 @@
    Caches static assets for reliable offline daily tracking.
    ============================================================ */
 
-const CACHE_NAME = 'progress-companion-merged-v14';
+const CACHE_NAME = 'progress-companion-merged-v15';
 const ASSETS = [
   './',
   './index.html',
@@ -18,7 +18,8 @@ const ASSETS = [
   './fixes.css',
   './v7.css',
   './tour.css',
-  './tour.js'
+  './tour.js',
+  './reveal.js'
 ];
 
 self.addEventListener('install', function (event) {

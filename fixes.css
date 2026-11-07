@@ -407,3 +407,8 @@
 /* Product picker: allow scrolling so Continue is reachable */
 .bee-onboarding-stage { overflow-y: auto !important; -webkit-overflow-scrolling: touch; justify-content: safe center !important; padding-top: 76px !important; padding-bottom: 40px !important; }
 .bee-character-card { flex-shrink: 0; max-height: none !important; }
+
+/* Scroll reveal */
+.sr { opacity: 0; transform: translateY(28px); transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1) var(--sr-delay,0ms), transform 0.7s cubic-bezier(0.22,1,0.36,1) var(--sr-delay,0ms); will-change: opacity, transform; }
+.sr.sr-in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { .sr { opacity: 1 !important; transform: none !important; transition: none !important; } }
